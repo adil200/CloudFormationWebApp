@@ -23,4 +23,15 @@ public class AuthService {
         authRepo.save(user);
         return "User registered successfully";
     }
+
+    public String logIn(String userName, String password) {
+        if (authRepo.findByUserName(userName) == null) {
+            return "User does not exist";
+        }
+        if (passwordEncoder.matches(password, authRepo.findByUserName(userName).getPassword())) {
+            return "User logged in successfully";
+        } else {
+            return "Incorrect username or password";
+        }
+    }
 }
